@@ -1,1 +1,13 @@
-ssss
+const express = require("express");
+const app = express();
+
+app.set("port", process.env.PORT || 3000);
+
+app.use(express.json());
+
+app.use("/api/users", require("../project-nodejs/routes/user.route"));
+
+app.listen(app.get("port"), () => {
+    console.log("Servidor corriendo en el puerto: ", app.get("port"));
+});
+

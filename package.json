@@ -1,0 +1,26 @@
+{
+  "name": "kodoti-user-api",
+  "version": "1.0.0",
+  "description": "proyecto kodoti api",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pcgonzales2020/kodoti-nodejs.git"
+  },
+  "author": "Christian Gonzales",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pcgonzales2020/kodoti-nodejs/issues"
+  },
+  "homepage": "https://github.com/pcgonzales2020/kodoti-nodejs#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.13"
+  }
+}
