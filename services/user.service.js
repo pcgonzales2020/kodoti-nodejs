@@ -1,41 +1,37 @@
+/* eslint-disable class-methods-use-this */
 const userData = require("../db/context");
 
 class UserService {
-    GetAllUser() {
+    getAll() {
         return userData;
     }
 
-    GetIndex(id) {
-        return userData.findIndex((data) => {
-            return data.id.toString() === id.toString();
-        })
+    _getIndex(id) {
+        return userData.findIndex((data) => data.id.toString() === id.toString());
     }
 
-    GetUserById(id) {
-        let index = this.GetIndex(id);
+    getById(id) {
+        const index = this._getIndex(id);
         return userData[index];
     }
 
-    CreateUser(data) {
+    create(data) {
         userData.push(data);
-        return "Usuario Creado"
+        return data;
     }
 
-    UpdateUserById(id, data) {
-        let index = this.GetIndex(id);
+    update(id, data) {
+        const index = this._getIndex(id);
         userData[index].userName = data.userName;
         userData[index].name = data.name;
         userData[index].email = data.email;
         userData[index].createDate = data.createDate;
         userData[index].password = data.password;
-        return "Usuario actualizado";
     }
 
-    DeleteUserById(id) {
-        let index = this.GetIndex(id);
-        userData.splice(index, 1)
-
-        return "Usuario Eliminado";
+    delete(id) {
+        const index = this._getIndex(id);
+        userData.splice(index, 1);
     }
 }
 
