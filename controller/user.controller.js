@@ -1,26 +1,7 @@
 /* eslint-disable class-methods-use-this */
 // const { restart } = require("nodemon");
-const joi = require('joi');
+
 const userService = require("../services/user.service");
-
-const schema = joi.object({
-    id: joi.string(),
-    userName: joi.string().trim(),
-    name: joi.string().trim(),
-    email: joi.string().email({ minDomainSegments: 2, tlds: { allow: ["com", "net"] } }),
-    password: joi.string().trim().required(),
-    createDate: joi.date(),
-});
-
-function createGuid() {
-    function _p8(s) {
-        const p = (`${Math.random().toString(16)} 000000000`).substr(2, 8);
-
-        return s ? `-${p.substr(0, 4)}-${p.substr(4, 4)}` : p;
-    }
-
-    return _p8() + _p8(true) + _p8(true) + _p8();
-}
 
 class UserController {
     getAll(req, res) {
@@ -36,32 +17,21 @@ class UserController {
     }
 
     create(req, res) {
-        let result = '';
-        const guid = createGuid();
-        req.body.id = guid;
+        const result = userService.create(req.body);
 
-        const { error } = schema.validate(req.body);
-        if (error) {
-            res.status(401).json({ err: error.details[0].message });
-            res.end();
+        res.status(result.status);
+
+        if (result.status === 401) {
+            res.send(result.message);
         } else {
-            res.status(201);
-            result = userService.create(req.body);
-            res.send(result);
+            res.send(result.save);
         }
     }
 
     update(req, res) {
-        const { error } = schema.validate(req.body);
-        userService.update(req.params.id, req.body);
-        if (error) {
-            res.status(401).json({ err: error.details[0].message });
-            res.end();
-        } else {
-            res.status(204);
-            userService.update(req.params.id, req.body);
-            res.end();
-        }
+        const result = userService.update(req.params.id, req.body);
+        res.status(result.status);
+        res.send(result.message);
     }
 
     delete(req, res) {

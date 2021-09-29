@@ -17,7 +17,7 @@ module.exports = userData = [{
     createDate: new Date(2020, 5, 18),
 },
 {
-    id: 3,  
+    id: 3,
     userName: "mtorres",
     name: "Mireya",
     email: "mtorres@gmail.com",
