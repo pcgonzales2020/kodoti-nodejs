@@ -1,6 +1,6 @@
 const joi = require('joi');
 
-const schemas = {
+module.exports = {
     user: joi.object({
         id: joi.string(),
         userName: joi.string().trim(),
@@ -10,5 +10,3 @@ const schemas = {
         createDate: joi.date(),
     }),
 };
-
-module.exports = schemas;

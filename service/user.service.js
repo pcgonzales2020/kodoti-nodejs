@@ -1,7 +1,8 @@
 /* eslint-disable class-methods-use-this */
-const userData = require("../db/context");
+const userData = require("../persistence/context");
 const guid = require("../common/guid");
 const schema = require("./schema");
+const AppError = require("../common/exception");
 
 class UserService {
     getAll() {
@@ -23,17 +24,18 @@ class UserService {
         const { error } = schema.user.validate(data);
 
         if (error) {
-            return { status: 401, message: error.details[0].message, save: null };
+            throw new AppError('ERR_USER_VALIDATION', error.details[0].message);
         }
+
         userData.push(data);
-        return { status: 201, message: null, save: data };
+        return data;
     }
 
     update(id, data) {
         const { error } = schema.user.validate(data);
 
         if (error) {
-            return { status: 401, message: error.details[0].message };
+            return { status: 400, message: error.details[0].message };
         }
 
         const index = this._getIndex(id);

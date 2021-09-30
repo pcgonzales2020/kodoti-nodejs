@@ -1,7 +1,8 @@
 /* eslint-disable class-methods-use-this */
 // const { restart } = require("nodemon");
 
-const userService = require("../services/user.service");
+const AppError = require("../../common/exception");
+const userService = require("../../service/user.service");
 
 class UserController {
     getAll(req, res) {
@@ -17,14 +18,18 @@ class UserController {
     }
 
     create(req, res) {
-        const result = userService.create(req.body);
-
-        res.status(result.status);
-
-        if (result.status === 401) {
-            res.send(result.message);
-        } else {
-            res.send(result.save);
+        try {
+            const result = userService.create(req.body);
+            res.send(result);
+        } catch (error) {
+            if (error instanceof AppError) {
+                if (error.code === 'ERR_USER_VALIDATION') {
+                    res.status(400);
+                    res.send(error.message);
+                }
+            } else {
+                throw error;
+            }
         }
     }
 

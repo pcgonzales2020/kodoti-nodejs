@@ -1,4 +1,4 @@
-function guid() {
+module.exports = () => {
     function _p8(s) {
         const p = (`${Math.random().toString(16)} 000000000`).substr(2, 8);
 
@@ -6,6 +6,4 @@ function guid() {
     }
 
     return _p8() + _p8(true) + _p8(true) + _p8();
-}
-
-module.exports = guid;
+};
