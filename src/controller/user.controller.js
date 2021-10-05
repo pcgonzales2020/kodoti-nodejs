@@ -1,25 +1,28 @@
 /* eslint-disable class-methods-use-this */
 // const { restart } = require("nodemon");
 
-const AppError = require("../../common/error");
-const userService = require("../../service/memory/user.service");
+const AppError = require("../common/error");
 
 class UserController {
+    constructor({ userService }) {
+        this.userService = userService;
+    }
+
     getAll(req, res) {
-        const result = userService.getAll();
+        const result = this.userService.getAll();
 
         res.send(result);
     }
 
     getById(req, res) {
-        const result = userService.getById(req.params.id);
+        const result = this.userService.getById(req.params.id);
 
         res.send(result);
     }
 
     create(req, res) {
         try {
-            const result = userService.create(req.body);
+            const result = this.userService.create(req.body);
             res.send(result);
         } catch (error) {
             if (error instanceof AppError) {
@@ -35,9 +38,8 @@ class UserController {
 
     update(req, res) {
         try {
-            const result = userService.update(req.params.id, req.body);
-            res.status(result.status);
-            res.send();    
+            this.userService.update(req.params.id, req.body);
+            res.send();
         } catch (error) {
             if (error instanceof AppError) {
                 if (error.code === 'ERR_USER_VALIDATION') {
@@ -48,15 +50,14 @@ class UserController {
                 throw error;
             }
         }
-        
     }
 
     delete(req, res) {
-        userService.delete(req.params.id);
+        this.userService.delete(req.params.id);
 
         res.status(204);
         res.end();
     }
 }
 
-module.exports = new UserController();
+module.exports = UserController;
