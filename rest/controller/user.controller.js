@@ -1,8 +1,8 @@
 /* eslint-disable class-methods-use-this */
 // const { restart } = require("nodemon");
 
-const AppError = require("../../common/exception");
-const userService = require("../../service/user.service");
+const AppError = require("../../common/error");
+const userService = require("../../service/memory/user.service");
 
 class UserController {
     getAll(req, res) {
@@ -25,7 +25,7 @@ class UserController {
             if (error instanceof AppError) {
                 if (error.code === 'ERR_USER_VALIDATION') {
                     res.status(400);
-                    res.send(error.message);
+                    res.send(error);
                 }
             } else {
                 throw error;
@@ -34,9 +34,21 @@ class UserController {
     }
 
     update(req, res) {
-        const result = userService.update(req.params.id, req.body);
-        res.status(result.status);
-        res.send(result.message);
+        try {
+            const result = userService.update(req.params.id, req.body);
+            res.status(result.status);
+            res.send();    
+        } catch (error) {
+            if (error instanceof AppError) {
+                if (error.code === 'ERR_USER_VALIDATION') {
+                    res.status(400);
+                    res.send(error);
+                }
+            } else {
+                throw error;
+            }
+        }
+        
     }
 
     delete(req, res) {
