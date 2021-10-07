@@ -1,4 +1,5 @@
 const express = require("express");
+const { scopePerRequest, loadControllers } = require('awilix-express');
 
 const app = express();
 
@@ -8,10 +9,10 @@ app.use(express.json());
 
 // get container
 const container = require('./src/container');
-const router = require('./src/routes');
 
-// enable routes
-router(app, container);
+// register container
+app.use(scopePerRequest(container));
+app.use(loadControllers('src/controller/*.js', { cwd: __dirname }));
 
 // start server
 app.listen(app.get("port"), () => {

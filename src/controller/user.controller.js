@@ -1,6 +1,6 @@
-/* eslint-disable class-methods-use-this */
-// const { restart } = require("nodemon");
+console.log('x');
 
+const { createController } = require('awilix-express');
 const AppError = require("../common/error");
 
 class UserController {
@@ -60,4 +60,10 @@ class UserController {
     }
 }
 
-module.exports = UserController;
+module.exports = createController(UserController)
+    .prefix('/users')
+    .get('', 'getAll')
+    .get('/:id', 'getById')
+    .post('', 'create')
+    .put('/:id', 'update')
+    .delete('/:id', 'delete');

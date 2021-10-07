@@ -19,6 +19,7 @@
   "homepage": "https://github.com/pcgonzales2020/kodoti-nodejs#readme",
   "dependencies": {
     "awilix": "^5.0.1",
+    "awilix-express": "^5.0.0",
     "express": "^4.17.1",
     "joi": "^17.4.2"
   },
