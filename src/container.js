@@ -6,6 +6,6 @@ const container = awilix.createContainer({
 });
 
 // services
-container.register('userService', asClass(UserService));
+container.register('userService', asClass(UserService).scoped());
 
 module.exports = container;
