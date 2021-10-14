@@ -1,12 +1,17 @@
 /* eslint-disable class-methods-use-this */
-const userData = require("../../persistence/memory.context");
+const db = require("../../common/databases/mysql");
 const guid = require("../../common/guid");
 const schema = require("../schema");
 const AppError = require("../../common/error");
 
 class UserService {
     getAll() {
-        return userData;
+        let results1 =null;
+        db.query('select * from user', (error, results, fields) => {
+            if (error) throw error;
+            results1=results; 
+        });
+        return  results1;
     }
 
     _getIndex(id) {

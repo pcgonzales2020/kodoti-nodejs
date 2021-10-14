@@ -43,6 +43,8 @@ class UserService {
         userData[index].email = data.email;
         userData[index].createDate = data.createDate;
         userData[index].password = data.password;
+
+        return { status: 204 };
     }
 
     delete(id) {
@@ -51,4 +53,4 @@ class UserService {
     }
 }
 
-module.exports = UserService;
+module.exports = new UserService();

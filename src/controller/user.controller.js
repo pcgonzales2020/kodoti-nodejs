@@ -1,5 +1,3 @@
-console.log('x');
-
 const { createController } = require('awilix-express');
 const AppError = require("../common/error");
 
@@ -10,16 +8,14 @@ class UserController {
 
     getAll(req, res) {
         const result = this.userService.getAll();
-
         res.send(result);
     }
 
     getById(req, res) {
         const result = this.userService.getById(req.params.id);
-
         res.send(result);
     }
-
+    
     create(req, res) {
         try {
             const result = this.userService.create(req.body);
