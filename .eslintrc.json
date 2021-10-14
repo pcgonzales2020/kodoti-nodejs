@@ -33,6 +33,7 @@
         "linebreak-style": "off",
         "no-underscore-dangle": "off",
         "no-param-reassign": "off",
-        "comma-dangle": "off"
+        "comma-dangle": "off",
+        "class-methods-use-this": "off"
     }
 }

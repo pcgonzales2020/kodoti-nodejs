@@ -1,61 +1,17 @@
-/* eslint-disable class-methods-use-this */
-const db = require("../../common/databases/mysql");
-const guid = require("../../common/guid");
-const schema = require("../schema");
-const AppError = require("../../common/error");
+const dbUsers = (query, cb) => {
+    setTimeout(() => {
+        cb(["eduardo", "cristian"]);
+    }, 200);
+};
 
 class UserService {
-    getAll() {
-        let results1 =null;
-        db.query('select * from user', (error, results, fields) => {
-            if (error) throw error;
-            results1=results; 
+    async getAll() {
+        return new Promise((resolve) => {
+            dbUsers("select * from users", (result) => {
+                resolve(result);
+            });
         });
-        return  results1;
-    }
-
-    _getIndex(id) {
-        return userData.findIndex((data) => data.id.toString() === id.toString());
-    }
-
-    getById(id) {
-        const index = this._getIndex(id);
-        return userData[index];
-    }
-
-    create(data) {
-        data.id = guid();
-
-        const { error } = schema.user.validate(data);
-
-        if (error) {
-            throw new AppError('ERR_USER_VALIDATION', error.details[0].message);
-        }
-
-        userData.push(data);
-        return data;
-    }
-
-    update(id, data) {
-        const { error } = schema.user.validate(data);
-        if (error) {
-            throw new AppError('ERR_USER_VALIDATION', error.details[0].message);
-        }
-
-        const index = this._getIndex(id);
-        userData[index].userName = data.userName;
-        userData[index].name = data.name;
-        userData[index].email = data.email;
-        userData[index].createDate = data.createDate;
-        userData[index].password = data.password;
-
-        return { status: 204 };
-    }
-
-    delete(id) {
-        const index = this._getIndex(id);
-        userData.splice(index, 1);
     }
 }
 
-module.exports = new UserService();
+module.exports = UserService;

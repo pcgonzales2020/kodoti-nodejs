@@ -6,8 +6,8 @@ class UserController {
         this.userService = userService;
     }
 
-    getAll(req, res) {
-        const result = this.userService.getAll();
+    async getAll(req, res) {
+        const result = await this.userService.getAll();
         res.send(result);
     }
 
@@ -15,7 +15,7 @@ class UserController {
         const result = this.userService.getById(req.params.id);
         res.send(result);
     }
-    
+
     create(req, res) {
         try {
             const result = this.userService.create(req.body);
