@@ -24,9 +24,9 @@ class UserController {
         }
     }
 
-    create(req, res) {
+    async create(req, res) {
         try {
-            const result = this.userService.create(req.body);
+            const result = await this.userService.create(req.body);
             res.send(result);
         } catch (error) {
             if (error instanceof AppError) {
@@ -40,10 +40,10 @@ class UserController {
         }
     }
 
-    update(req, res) {
+    async update(req, res) {
         try {
-            this.userService.update(req.params.id, req.body);
-            res.send();
+            await this.userService.update(req.params.id, req.body);
+            res.send(204);
         } catch (error) {
             if (error instanceof AppError) {
                 if (error.code === 'ERR_USER_VALIDATION') {
@@ -56,11 +56,15 @@ class UserController {
         }
     }
 
-    delete(req, res) {
-        this.userService.delete(req.params.id);
+    async delete(req, res) {
+        try {
+            await this.userService.delete(req.params.id);
 
-        res.status(204);
-        res.end();
+            res.status(204);
+            res.end();
+        } catch (error) {
+            res.send(error);
+        }
     }
 }
 
