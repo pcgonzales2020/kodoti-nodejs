@@ -1,5 +1,5 @@
 module.exports = {
-    mysql:{
+    mysql: {
         host: 'localhost',
         user: 'root',
         paswword: '',

@@ -1,10 +1,11 @@
 const mysql = require('mysql');
-const cfg = require('../../../config') ; 
+const cfg = require('../../../config');
+
 const connect = mysql.createConnection({
-    host: cfg.host,
-    user: cfg.user,
-    password: cfg.password,
-    database: cfg.database
+    host: cfg.mysql.host,
+    user: cfg.mysql.user,
+    password: cfg.mysql.password,
+    database: cfg.mysql.database
 });
 
 connect.connect((error) => {

@@ -7,13 +7,21 @@ class UserController {
     }
 
     async getAll(req, res) {
-        const result = await this.userService.getAll();
-        res.send(result);
+        try {
+            const result = await this.userService.getAll();
+            res.send(result);
+        } catch (error) {
+            res.send(error);
+        }
     }
 
-    getById(req, res) {
-        const result = this.userService.getById(req.params.id);
-        res.send(result);
+    async getById(req, res) {
+        try {
+            const result = await this.userService.getById(req.params.id);
+            res.send(result);
+        } catch (error) {
+            res.send(error);
+        }
     }
 
     create(req, res) {

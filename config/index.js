@@ -1,2 +1,1 @@
-const cfg = require('./development');
-module.exports = cfg;
+module.exports = require('./development');
