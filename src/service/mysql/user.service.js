@@ -1,15 +1,15 @@
-const mysql = require('../../common/databases/mysql');
 const guid = require("../../common/guid");
 const schema = require("../schema");
 const AppError = require("../../common/error");
+const MysqlString = require("./executeMysql");
 
 class UserService {
     getAll() {
-        return this._sqlString('select * from user');
+        return MysqlString('select * from user');
     }
 
     getById(id) {
-        return this._sqlString(`select * from user where id=${id}`);
+        return MysqlString(`select * from user where id=${id}`);
     }
 
     create(data) {
@@ -21,7 +21,7 @@ class UserService {
             throw new AppError('ERR_USER_VALIDATION', error.details[0].message);
         }
 
-        return this._sqlString(`insert into user values (
+        return MysqlString(`insert into user values (
                                             '${data.id}'
                                             ,'${data.userName}'
                                             ,'${data.name}'
@@ -37,7 +37,7 @@ class UserService {
             throw new AppError('ERR_USER_VALIDATION', error.details[0].message);
         }
 
-        return this._sqlString(`update user set 
+        return MysqlString(`update user set 
                                         userName='${data.userName}'
                                         ,name = '${data.name}'
                                         ,email = '${data.email}'
@@ -47,20 +47,7 @@ class UserService {
     }
 
     delete(id) {
-        return this._sqlString(`delete from user where id = '${id}'`);
-    }
-
-    _sqlString(sentence, response) {
-        return new Promise((resolve, reject) => {
-            mysql.query(sentence, (error, result) => {
-                if (error) {
-                    reject(error);
-                }
-
-                if (response) result = response;
-                resolve(result);
-            });
-        });
+        return MysqlString(`delete from user where id = '${id}'`);
     }
 }
 
