@@ -30,10 +30,8 @@ class UserController {
             res.send(result);
         } catch (error) {
             if (error instanceof AppError) {
-                if (error.code === 'ERR_USER_VALIDATION') {
-                    res.status(400);
-                    res.send(error);
-                }
+                res.status(400);
+                res.send(error);
             } else {
                 throw error;
             }
@@ -46,10 +44,8 @@ class UserController {
             res.send(204);
         } catch (error) {
             if (error instanceof AppError) {
-                if (error.code === 'ERR_USER_VALIDATION') {
-                    res.status(400);
-                    res.send(error);
-                }
+                res.status(400);
+                res.send(error);
             } else {
                 throw error;
             }
